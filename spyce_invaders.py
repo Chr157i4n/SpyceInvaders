@@ -42,7 +42,7 @@ while RUN_GAME:
             if keys[pygame.K_w]:
                 spaceship_imagerect.y -= 1
             if keys[pygame.K_s]:
-                spaceship_imagerect.y += 1            
+                spaceship_imagerect.y += 1
 
 
     screen.fill(WHITE)
