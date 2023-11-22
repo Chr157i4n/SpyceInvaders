@@ -1,3 +1,4 @@
+#pylint: disable=global-variable-not-assigned
 """
 Space Invaders game 
 """
@@ -35,6 +36,7 @@ clock = pygame.time.Clock()
 
 
 def run_game():
+    """run game function"""
     global ORANGE, RED, GREEN, BLACK, WHITE, WINDOWSIZEX, WINDOWSIZEY, RUN_GAME
     global screen, player, clock
 
@@ -58,7 +60,7 @@ def run_game():
         screen.fill(WHITE)
         screen.blit(background_image, (0, 0))
         player.draw(screen)
-        
+
         pygame.display.flip()
 
         clock.tick(60)

@@ -31,4 +31,5 @@ class SpyceObject:
         self._position.y += y
 
     def get_position(self):
+        """get postion"""
         return self._position
