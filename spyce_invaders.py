@@ -2,6 +2,7 @@
 Space Invaders game 
 """
 import pygame
+from spyce_player import SpycePlayer
 
 pygame.init()
 
@@ -22,13 +23,9 @@ screen = pygame.display.set_mode((WINDOWSIZEX, WINDOWSIZEY))
 background_image = pygame.image.load("images/background.png")
 background_image = pygame.transform.scale(background_image, (WINDOWSIZEX, WINDOWSIZEY))
 
-spaceship_image = pygame.image.load("images/spaceship.png")
-spaceship_image = pygame.transform.scale(spaceship_image, (100, 100))
-spaceship_imagerect = spaceship_image.get_rect()
-spaceship_imagerect.x = WINDOWSIZEX/2-50
-spaceship_imagerect.y = WINDOWSIZEY-100
 
-print(spaceship_imagerect)
+
+player = SpycePlayer("images/spaceship.png")
 
 clock = pygame.time.Clock()
 
@@ -43,19 +40,19 @@ while RUN_GAME:
 
             keys=pygame.key.get_pressed()
             if keys[pygame.K_a]:
-                spaceship_imagerect.x -= 1
+                player.move_x(-1)
             if keys[pygame.K_d]:
-                spaceship_imagerect.x += 1
+                player.move_x(1)
             if keys[pygame.K_w]:
-                spaceship_imagerect.y -= 1
+                player.move_y(-1)
             if keys[pygame.K_s]:
-                spaceship_imagerect.y += 1
+                player.move_y(1)
 
 
     screen.fill(WHITE)
     screen.blit(background_image, (0, 0))
-    screen.blit(spaceship_image, spaceship_imagerect)
-
+    player.draw(screen)
+    
     pygame.display.flip()
 
     clock.tick(60)
