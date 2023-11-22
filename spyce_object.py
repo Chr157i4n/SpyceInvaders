@@ -7,26 +7,28 @@ class SpyceObject:
     """
     Object class
     """
-    image = None
-    position = None
+    _image = None
+    _position = None
 
     def __init__(self, image_path):
         """constructor"""
-        self.image = pygame.image.load(image_path)
-        self.image = pygame.transform.scale(self.image, (100, 100))
-        self.position = self.image.get_rect()
-        print(self.position)
-        self.position.x = 50
-        self.position.y = 50
+        self._image = pygame.image.load(image_path)
+        self._image = pygame.transform.scale(self._image, (100, 100))
+        self._position = self._image.get_rect()
+        self._position.x = 0
+        self._position.y = 0
 
     def draw(self, screen):
         """draw"""
-        screen.blit(self.image, self.position)
+        screen.blit(self._image, self._position)
 
     def move_x(self, x):
         """move x relative"""
-        self.position.x += x
+        self._position.x += x
 
     def move_y(self, y):
         """move y relative"""
-        self.position.y += y
+        self._position.y += y
+
+    def get_position(self):
+        return self._position
