@@ -30,7 +30,7 @@ background_image = pygame.image.load("images/background.png")
 background_image = pygame.transform.scale(background_image, (WINDOWSIZEX, WINDOWSIZEY))
 
 player = SpycePlayer("images/spaceship.png")
-shot_list = list()
+shot_list = []
 
 clock = pygame.time.Clock()
 
@@ -63,11 +63,10 @@ def run_game():
         screen.fill(WHITE)
         screen.blit(background_image, (0, 0))
         player.draw(screen)
-        for shot in shot_list:
+        for shot in shot_list.copy():
             shot.move()
             if shot.get_position().y < 20:
                 shot_list.remove(shot)
-                del shot
                 continue
             shot.draw(screen)
 

@@ -13,6 +13,7 @@ class SpyceShot(SpyceObject):
         SpyceObject.__init__(self, "images/ammo.png", position)
         self._image = pygame.transform.scale(self._image, (16, 36))
 
-    def move(self):
+    def move(self, move=pygame.Rect(0,0,0,0)):
         """move only up"""
+        del move
         self._position.y -= 1
