@@ -30,6 +30,7 @@ background_image = pygame.image.load("images/background.png")
 background_image = pygame.transform.scale(background_image, (WINDOWSIZEX, WINDOWSIZEY))
 
 player = SpycePlayer("images/spaceship.png")
+shot_list = list()
 
 clock = pygame.time.Clock()
 
@@ -49,17 +50,26 @@ def run_game():
 
                 keys=pygame.key.get_pressed()
                 if keys[pygame.K_a]:
-                    player.move_x(-1)
+                    player.move_x(-2)
                 if keys[pygame.K_d]:
-                    player.move_x(1)
+                    player.move_x(2)
                 if keys[pygame.K_w]:
-                    player.move_y(-1)
+                    player.move_y(-2)
                 if keys[pygame.K_s]:
-                    player.move_y(1)
+                    player.move_y(2)
+                if keys[pygame.K_SPACE]:
+                    player.shoot(shot_list)
 
         screen.fill(WHITE)
         screen.blit(background_image, (0, 0))
         player.draw(screen)
+        for shot in shot_list:
+            shot.move()
+            if shot.get_position().y < 20:
+                shot_list.remove(shot)
+                del shot
+                continue
+            shot.draw(screen)
 
         pygame.display.flip()
 
