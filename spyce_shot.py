@@ -8,10 +8,10 @@ class SpyceShot(SpyceObject):
     """
     Player class
     """
-    def __init__(self, position):
+    def __init__(self, image, position):
         """constructor"""
-        SpyceObject.__init__(self, "images/ammo.png", position)
-        self._image = pygame.transform.scale(self._image, (16, 36))
+        SpyceObject.__init__(self, image, position)
+        
 
     def move(self, move=pygame.Rect(0,0,0,0)):
         """move only up"""

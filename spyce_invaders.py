@@ -4,6 +4,7 @@ Space Invaders game
 """
 import pygame
 from spyce_player import SpycePlayer
+from spyce_invader import SpyceInvader
 
 
 ORANGE  = ( 255, 140, 0)
@@ -29,8 +30,21 @@ screen = pygame.display.set_mode((WINDOWSIZEX, WINDOWSIZEY))
 background_image = pygame.image.load("images/background.png")
 background_image = pygame.transform.scale(background_image, (WINDOWSIZEX, WINDOWSIZEY))
 
-player = SpycePlayer("images/spaceship.png")
+
+image_spaceship = pygame.image.load("images/spaceship.png")
+image_spaceship = pygame.transform.scale(image_spaceship, (80, 80))
+image_invader = pygame.image.load("images/invader.png")
+image_invader = pygame.transform.scale(image_invader, (80, 80))
+image_shot = pygame.image.load("images/ammo.png")
+image_shot = pygame.transform.scale(image_shot, (16, 36))
+
+
+player = SpycePlayer(image_spaceship, pygame.Rect(WINDOWSIZEX/2, WINDOWSIZEY-100, 0, 0))
 shot_list = []
+invader_list = []
+for i in range(10):
+    invader = SpyceInvader(image_invader, pygame.Rect(100*i, 40, 0, 0))
+    invader_list.append(invader)
 
 clock = pygame.time.Clock()
 
@@ -50,15 +64,15 @@ def run_game():
 
                 keys=pygame.key.get_pressed()
                 if keys[pygame.K_a]:
-                    player.move_x(-2)
+                    player.move(pygame.Rect(-2, 0, 0, 0))
                 if keys[pygame.K_d]:
-                    player.move_x(2)
+                    player.move(pygame.Rect(2, 0, 0, 0))
                 if keys[pygame.K_w]:
-                    player.move_y(-2)
+                    player.move(pygame.Rect(0, -2, 0, 0))
                 if keys[pygame.K_s]:
-                    player.move_y(2)
+                    player.move(pygame.Rect(0, 2, 0, 0))
                 if keys[pygame.K_SPACE]:
-                    player.shoot(shot_list)
+                    player.shoot(shot_list, image_shot)
 
         screen.fill(WHITE)
         screen.blit(background_image, (0, 0))
@@ -68,7 +82,12 @@ def run_game():
             if shot.get_position().y < 20:
                 shot_list.remove(shot)
                 continue
+            for invader in invader_list.copy():
+                if shot.check_collision(invader):
+                    invader_list.remove(invader)
             shot.draw(screen)
+        for invader in invader_list.copy():
+            invader.draw(screen)
 
         pygame.display.flip()
 

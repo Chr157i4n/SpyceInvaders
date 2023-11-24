@@ -4,9 +4,8 @@ player module
 import pygame
 from spyce_object import SpyceObject
 from spyce_shot import SpyceShot
-import copy
 
-class SpycePlayer(SpyceObject):
+class SpyceInvader(SpyceObject):
     """
     Player class
     """
@@ -17,7 +16,5 @@ class SpycePlayer(SpyceObject):
 
     def shoot(self, shot_list, image):
         """shoot"""
-        shot_position = copy.deepcopy(self._position)
-        shot_position.x += 40
-        shot = SpyceShot(image, shot_position)
+        shot = SpyceShot(image, self._position)
         shot_list.append(shot)
