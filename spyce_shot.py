@@ -11,9 +11,9 @@ class SpyceShot(SpyceObject):
     def __init__(self, image, position):
         """constructor"""
         SpyceObject.__init__(self, image, position)
-        
+
 
     def move(self, move=pygame.Rect(0,0,0,0)):
         """move only up"""
         del move
-        self._position.y -= 1
+        self._position.y -= 4

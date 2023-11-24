@@ -12,7 +12,7 @@ class SpyceInvader(SpyceObject):
     def __init__(self, image, position=pygame.Rect(0,0,0,0)):
         """constructor"""
         SpyceObject.__init__(self, image, position)
-        
+
 
     def shoot(self, shot_list, image):
         """shoot"""

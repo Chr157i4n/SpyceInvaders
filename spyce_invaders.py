@@ -43,17 +43,55 @@ player = SpycePlayer(image_spaceship, pygame.Rect(WINDOWSIZEX/2, WINDOWSIZEY-100
 shot_list = []
 invader_list = []
 for i in range(10):
-    invader = SpyceInvader(image_invader, pygame.Rect(100*i, 40, 0, 0))
-    invader_list.append(invader)
+    newinvader = SpyceInvader(image_invader, pygame.Rect(100*i, 40, 0, 0))
+    invader_list.append(newinvader)
 
 clock = pygame.time.Clock()
 
+
+def manage_keys():
+    """manage keys pressed"""
+    global screen, player, clock, shot_list, invader_list
+
+    keys=pygame.key.get_pressed()
+    if keys[pygame.K_a]:
+        player.move(pygame.Rect(-2, 0, 0, 0))
+    if keys[pygame.K_d]:
+        player.move(pygame.Rect(2, 0, 0, 0))
+    if keys[pygame.K_w]:
+        player.move(pygame.Rect(0, -2, 0, 0))
+    if keys[pygame.K_s]:
+        player.move(pygame.Rect(0, 2, 0, 0))
+    if keys[pygame.K_SPACE]:
+        player.shoot(shot_list, image_shot)
+
+
+def manage_shots():
+    """manage shots"""
+    global screen, player, clock, shot_list, invader_list
+
+    for shot in shot_list.copy():
+        shot.move()
+        if shot.get_position().y < 20:
+            shot_list.remove(shot)
+            continue
+        for invader in invader_list.copy():
+            if shot.check_collision(invader):
+                invader_list.remove(invader)
+        shot.draw(screen)
+
+def manage_invaders():
+    """manage invaders"""
+    global screen, player, clock, shot_list, invader_list
+
+    for invader in invader_list.copy():
+        invader.draw(screen)
 
 
 def run_game():
     """run game function"""
     global ORANGE, RED, GREEN, BLACK, WHITE, WINDOWSIZEX, WINDOWSIZEY, RUN_GAME
-    global screen, player, clock
+    global screen, player, clock, shot_list, invader_list
 
     while RUN_GAME:
         for event in pygame.event.get():
@@ -61,33 +99,15 @@ def run_game():
                 RUN_GAME = False
                 print("Quit button was pressed")
             else:
-
-                keys=pygame.key.get_pressed()
-                if keys[pygame.K_a]:
-                    player.move(pygame.Rect(-2, 0, 0, 0))
-                if keys[pygame.K_d]:
-                    player.move(pygame.Rect(2, 0, 0, 0))
-                if keys[pygame.K_w]:
-                    player.move(pygame.Rect(0, -2, 0, 0))
-                if keys[pygame.K_s]:
-                    player.move(pygame.Rect(0, 2, 0, 0))
-                if keys[pygame.K_SPACE]:
-                    player.shoot(shot_list, image_shot)
+                manage_keys()
 
         screen.fill(WHITE)
         screen.blit(background_image, (0, 0))
+
+        manage_shots()
+        manage_invaders()
+
         player.draw(screen)
-        for shot in shot_list.copy():
-            shot.move()
-            if shot.get_position().y < 20:
-                shot_list.remove(shot)
-                continue
-            for invader in invader_list.copy():
-                if shot.check_collision(invader):
-                    invader_list.remove(invader)
-            shot.draw(screen)
-        for invader in invader_list.copy():
-            invader.draw(screen)
 
         pygame.display.flip()
 

@@ -39,6 +39,7 @@ class SpyceObject:
     def get_position(self):
         """get postion"""
         return self._position
-    
-    def check_collision(self, object):
-        return self._position.colliderect(object.get_position())
+
+    def check_collision(self, object_to_test):
+        """check collision"""
+        return self._position.colliderect(object_to_test.get_position())
