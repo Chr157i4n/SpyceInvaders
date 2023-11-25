@@ -24,7 +24,7 @@ class SpycePlayer(SpyceObject):
     def shoot(self, shot_list, image):
         """shoot"""
         current_time = time.time()
-        if(current_time < self._last_shot_time + self._shoot_delay):
+        if current_time < self._last_shot_time + self._shoot_delay:
             return False
         self._last_shot_time = current_time
         shot_position = copy.deepcopy(self._position)
