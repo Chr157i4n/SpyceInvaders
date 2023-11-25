@@ -38,6 +38,12 @@ image_invader = pygame.transform.scale(image_invader, (80, 80))
 image_shot = pygame.image.load("images/ammo.png")
 image_shot = pygame.transform.scale(image_shot, (16, 36))
 
+pygame.mixer.music.load('sounds/music_breakout.mp3')
+pygame.mixer.music.play(-1,0.0)
+pygame.mixer.music.set_volume(.6)
+
+sound_shoot = pygame.mixer.Sound('sounds/shoot.wav')
+
 
 player = SpycePlayer(image_spaceship, pygame.Rect(WINDOWSIZEX/2, WINDOWSIZEY-100, 0, 0))
 shot_list = []
@@ -64,6 +70,7 @@ def manage_keys():
         player.move(pygame.Rect(0, 2, 0, 0))
     if keys[pygame.K_SPACE]:
         player.shoot(shot_list, image_shot)
+        pygame.mixer.Sound.play(sound_shoot)
 
 
 def manage_shots():
