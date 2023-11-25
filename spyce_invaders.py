@@ -69,8 +69,8 @@ def manage_keys():
     if keys[pygame.K_s]:
         player.move(pygame.Rect(0, 2, 0, 0))
     if keys[pygame.K_SPACE]:
-        player.shoot(shot_list, image_shot)
-        pygame.mixer.Sound.play(sound_shoot)
+        if player.shoot(shot_list, image_shot):
+            pygame.mixer.Sound.play(sound_shoot)
 
 
 def manage_shots():
