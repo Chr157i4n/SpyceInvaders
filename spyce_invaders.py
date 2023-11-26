@@ -40,9 +40,12 @@ image_shot = pygame.transform.scale(image_shot, (16, 36))
 
 pygame.mixer.music.load('sounds/music_breakout.mp3')
 pygame.mixer.music.play(-1,0.0)
-pygame.mixer.music.set_volume(.6)
+pygame.mixer.music.set_volume(.2)
 
 sound_shoot = pygame.mixer.Sound('sounds/shoot.wav')
+
+font = pygame.font.Font(None, 36)
+points = 0
 
 
 player = SpycePlayer(image_spaceship, pygame.Rect(WINDOWSIZEX/2, WINDOWSIZEY-100, 0, 0))
@@ -75,7 +78,7 @@ def manage_keys():
 
 def manage_shots():
     """manage shots"""
-    global screen, player, clock, shot_list, invader_list
+    global screen, player, clock, shot_list, invader_list, points
 
     for shot in shot_list.copy():
         shot.move()
@@ -85,7 +88,9 @@ def manage_shots():
         for invader in invader_list.copy():
             if shot.check_collision(invader):
                 invader_list.remove(invader)
+                points += 10
         shot.draw(screen)
+
 
 def manage_invaders():
     """manage invaders"""
@@ -115,6 +120,12 @@ def run_game():
         manage_invaders()
 
         player.draw(screen)
+
+        text = font.render(f"Points {points}", 1, RED)
+        textpos = text.get_rect(centerx=screen.get_width()*0.9)
+        screen.blit(text, textpos)
+
+
 
         pygame.display.flip()
 
