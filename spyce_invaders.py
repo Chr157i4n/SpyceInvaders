@@ -1,4 +1,5 @@
 #pylint: disable=global-variable-not-assigned
+#pylint: disable=C0103
 """
 Space Invaders game 
 """
